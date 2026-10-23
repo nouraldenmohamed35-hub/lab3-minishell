@@ -145,7 +145,7 @@ static void setString(char **dest, const std::string &value)
 
 
 
-// ---------- Parsing: one small function for each case ----------
+// ---------- Parsing: one small function for each case ---------------
 // is this token a normal word (a command name or an argument)?
 static bool isWord(const Token &t)
 {
@@ -305,7 +305,7 @@ void parse(std::vector<Token> &tokens)
     currentCommand.execute();
 }
 
-// ---------- SimpleCommand and Command basics ----------
+// ------------+----- SimpleCommand and Command basics ----------
 SimpleCommand::SimpleCommand()
 {
     _numberOfAvailableArguments = 5;
@@ -398,7 +398,7 @@ void Command::print()
     printf("              COMMAND TABLE                \n");
     printf("\n");
     printf("  #   Simple Commands\n");
-    printf("  --- ----------------------------------------------------------\n");
+    printf("  --- ---------------------------------------------------------------\n");
 
     for (int i = 0; i < _numberOfSimpleCommands; i++)
     {
