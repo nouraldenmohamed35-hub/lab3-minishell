@@ -29,6 +29,7 @@
 #include "command.h"
 #include "tokenizer.h"
 
+// ---------- Wildcards (* and ?) ----------
 // add a word to the command; if it has * or ? replace it with the matching file names
 static void addWord(SimpleCommand *cmd, const std::string &word)
 {
@@ -49,6 +50,7 @@ static void addWord(SimpleCommand *cmd, const std::string &word)
     cmd->insertArgument(strdup(word.c_str()));
 }
 
+// ---------- Log file (a line is written when a child ends) ----------
 static int g_logFd = -1;
 
 // write one line in the log file
@@ -74,6 +76,7 @@ static void childEnded(int sig)
 }
 
 
+// ---------- Quotes ----------
 // does the text end with this character?
 static bool endsWith(const std::string &text, char c)
 {
@@ -142,6 +145,7 @@ static void setString(char **dest, const std::string &value)
 
 
 
+// ---------- Parsing: one small function for each case ----------
 // is this token a normal word (a command name or an argument)?
 static bool isWord(const Token &t)
 {
@@ -238,6 +242,7 @@ static std::string handleEnd(Command &cmd, SimpleCommand *simple, bool afterPipe
 }
 
 
+// ---------- parse(): tokens -> Command ----------
 void parse(std::vector<Token> &tokens)
 {
     // empty line: only the EOF token
@@ -300,6 +305,7 @@ void parse(std::vector<Token> &tokens)
     currentCommand.execute();
 }
 
+// ---------- SimpleCommand and Command basics ----------
 SimpleCommand::SimpleCommand()
 {
     _numberOfAvailableArguments = 5;
@@ -385,6 +391,7 @@ void Command::clear()
     _append = 0;
 }
 
+// ---------- print(): shows the command table ----------
 void Command::print()
 {
     printf("\n\n");
@@ -412,6 +419,7 @@ void Command::print()
     printf("\n\n");
 }
 
+// ---------- execute() and its helpers ----------
 // The next 3 functions are used inside the child.
 // Each one opens a file and uses it as the input, the output or the errors.
 
@@ -599,6 +607,7 @@ void Command::execute()
     clear();
 }
 
+// ---------- prompt() and main() ----------
 void Command::prompt()
 {
     std::string input;
