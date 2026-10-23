@@ -1,0 +1,4 @@
+*.o
+myshell
+myshell.log
+*.zip
